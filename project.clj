@@ -16,6 +16,7 @@
                  [compojure "1.6.1"]
                  [conman "0.8.3"]
                  [cprop "0.1.13"]
+                 [crypto-password "0.2.0"]
                  [funcool/struct "1.3.0"]
                  [luminus-http-kit "0.1.6"]
                  [luminus-migrations "0.6.3"]

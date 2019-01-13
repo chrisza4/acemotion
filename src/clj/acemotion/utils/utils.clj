@@ -1,3 +1,3 @@
-(ns acemotion.utils)
+(ns acemotion.utils.utils)
 
-(defn uuid [] (java.util.UUID/randomUUID)))
+(defn uuid [] (java.util.UUID/randomUUID))
