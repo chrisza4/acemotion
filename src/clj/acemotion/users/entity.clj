@@ -20,5 +20,11 @@
                   :salt ""
                   :is_active true}))
 
+(defn get-by-id [user-id]
+  (get-user user-id))
 
+(defn get-by-email [email]
+  (get-user-by-email {:email email}))
 
+(defn test-delete-all-users! []
+  (delete-all-users!))

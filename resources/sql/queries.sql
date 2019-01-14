@@ -15,6 +15,11 @@ WHERE id = :id
 SELECT * FROM users
 WHERE id = :id
 
+-- :name get-user-by-email :? :1
+-- :doc retrives a user record given email
+SELECT * FROM users
+WHERE email = :email
+
 -- :name get-all-users :? :*
 SELECT * FROM users
 
@@ -22,3 +27,7 @@ SELECT * FROM users
 -- :doc deletes a user record given the id
 DELETE FROM users
 WHERE id = :id
+
+-- :name delete-all-users! :! :n
+-- :doc deletes all users, use for testing
+DELETE FROM users
