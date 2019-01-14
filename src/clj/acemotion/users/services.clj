@@ -5,6 +5,4 @@
 
 (defn login [email password]
   (if-let [user (get-by-email email)]
-    (if (validate-password password (:pass user))
-      user
-      nil)))
+    (if (validate-password password (:pass user)) user nil)))
