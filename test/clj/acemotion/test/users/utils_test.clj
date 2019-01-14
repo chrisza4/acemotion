@@ -20,9 +20,9 @@
 (deftest test-jwt-token
   (testing "should be able to create and verify token"
     (let [user {:id (str utils/uuid) :email "test@test.com"}
+          user-id (:id user)
           token (create-jwt-token user)
           verified-data (verify-jwt-token token)]
-      (is
-        (and
-          (= (:email verified-data) "test@test.com")
-          (= (:id verified-data) (:id user)))))))
+      (do
+        (is (= (:email verified-data) "test@test.com"))
+        (is (= (:id verified-data) user-id))))))
