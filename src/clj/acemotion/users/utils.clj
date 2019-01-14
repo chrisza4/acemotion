@@ -1,5 +1,6 @@
 (ns acemotion.users.utils
   (:require
+    [acemotion.config :refer [env]]
     [buddy.sign.jwt :as jwt]
     [crypto.password.pbkdf2 :as password]))
 
@@ -10,7 +11,7 @@
   (password/check pwd hash))
 
 (defn create-jwt-token [user]
-  (jwt/sign user "secret"))
+  (jwt/sign user (:jwt-secret env)))
 
 (defn verify-jwt-token [token]
-  (jwt/unsign token "secret"))
+  (jwt/unsign token (:jwt-secret env)))
