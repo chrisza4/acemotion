@@ -1,6 +1,7 @@
 (ns acemotion.test.users.utils_test
   (:require
     [acemotion.users.utils :refer :all]
+    [acemotion.utils.utils :as utils]
     [clojure.test :refer :all]))
 
 (deftest test-hash-paassord
@@ -15,3 +16,9 @@
   (testing "hashed password should be able to validate back"
     (let [hashed-pwd (hash-password "another-pwd")]
       (is (not (validate-password "another-pwd2" hashed-pwd))))))
+
+(deftest test-jwt-token
+  (testing "should be able to create and verify token"
+    (let [user {:id (utils/uuid) :email "test@test.com"}
+          token (create-jwt-token user)]
+      (is (= ((verify-jwt-token token) :email) "test@test.com")))))

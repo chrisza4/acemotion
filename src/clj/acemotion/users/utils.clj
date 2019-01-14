@@ -7,3 +7,9 @@
 
 (defn validate-password [pwd hash]
   (password/check pwd hash))
+
+(defn create-jwt-token [user]
+  true)
+
+(defn verify-jwt-token [token]
+  true)
