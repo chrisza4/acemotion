@@ -5,6 +5,7 @@
 
   :dependencies [[baking-soda "0.2.0" :exclusions [cljsjs/react-bootstrap]]
                  [buddy "2.0.0"]
+                 [buddy/buddy-sign "2.2.0"]
                  [ch.qos.logback/logback-classic "1.2.3"]
                  [cheshire "5.8.1"]
                  [clj-commons/secretary "1.2.4"]

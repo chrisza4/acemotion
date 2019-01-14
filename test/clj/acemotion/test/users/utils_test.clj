@@ -4,7 +4,7 @@
     [acemotion.utils.utils :as utils]
     [clojure.test :refer :all]))
 
-(deftest test-hash-paassord
+(deftest test-hash-password
   (testing "hashed password should not equal original password"
     (let [hashed-pwd (hash-password "my-pwd")]
       (is (not= hashed-pwd "my-pwd"))))
