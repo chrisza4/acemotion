@@ -3,6 +3,7 @@
             [compojure.api.sweet :refer :all]
             [schema.core :as s]
             [compojure.api.meta :refer [restructure-param]]
+            [acemotion.users.services :as user-service]
             [buddy.auth.accessrules :refer [restrict]]
             [buddy.auth :refer [authenticated?]]))
 
@@ -21,6 +22,12 @@
   [_ binding acc]
   (update-in acc [:letks] into [binding `(:identity ~'+compojure-api-request+)]))
 
+(s/defschema api-response
+  {:ok Boolean
+   :response s/Any})
+
+
+
 (def service-routes
   (api
     {:swagger {:ui "/swagger-ui"
@@ -28,14 +35,28 @@
                :data {:info {:version "1.0.0"
                              :title "Sample API"
                              :description "Sample Services"}}}}
-    
+
     (GET "/authenticated" []
          :auth-rules authenticated?
          :current-user user
          (ok {:user user}))
+
+    (POST "/login" []
+      :return      api-response
+      :body-params [username :- String, password :- String]
+      :summary "Login and get authentication token"
+      (let [token (user-service/login-get-token username password)]
+        {:body
+         (if (= token nil)
+           {:ok false :response "error authentication"}
+           {:ok true  :response {:token token}})}))
+
+
+
+
     (context "/api" []
       :tags ["thingie"]
-      
+
       (GET "/plus" []
         :return       Long
         :query-params [x :- Long, {y :- Long 1}]
