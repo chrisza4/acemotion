@@ -8,7 +8,8 @@
 
 (defn login [email password]
   (if-let [user (get-by-email email)]
-    (if (validate-password password (:pass user)) user nil)))
+    (when (validate-password password (:pass user))
+          user)))
 
 (defn login-get-token [email password]
   (if-let [user (login email password)]

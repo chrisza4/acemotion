@@ -2,13 +2,19 @@
   (:require
     [acemotion.config :refer [env]]
     [buddy.sign.jwt :as jwt]
-    [crypto.password.pbkdf2 :as password]))
+    [crypto.password.pbkdf2 :as password])
+  (:import java.lang.IndexOutOfBoundsException))
 
 (defn hash-password [pwd]
   (password/encrypt pwd 100000))
 
 (defn validate-password [pwd hash]
-  (password/check pwd hash))
+  (try
+    (password/check pwd hash)
+    (catch IndexOutOfBoundsException e ; IndexOutOfBoundsException means hash incorrect format
+      false)
+    (catch Exception e
+      false)))
 
 (defn create-jwt-token [user]
   (jwt/sign user (:jwt-secret env)))

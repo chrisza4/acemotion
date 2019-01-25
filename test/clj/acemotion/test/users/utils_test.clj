@@ -15,14 +15,17 @@
 
   (testing "hashed password should be able to validate back"
     (let [hashed-pwd (hash-password "another-pwd")]
-      (is (not (validate-password "another-pwd2" hashed-pwd))))))
+      (is (not (validate-password "another-pwd2" hashed-pwd)))))
+
+  (testing "given incorrect hash format (not crypto.password.pbkdf2), should return false"
+      (is (not (validate-password "x" "y")))))
 
 (deftest test-jwt-token
   (testing "should be able to create and verify token"
     (let [user {:id (str utils/uuid) :email "test@test.com"}
           user-id (:id user)
           token (create-jwt-token user)
-          verified-data (verify-jwt-token token)]
+          {:keys [email id]} (verify-jwt-token token)]
       (do
-        (is (= (:email verified-data) "test@test.com"))
-        (is (= (:id verified-data) user-id))))))
+        (is (= email "test@test.com"))
+        (is (= id user-id))))))

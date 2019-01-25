@@ -24,3 +24,13 @@
 (defn stop [server]
   (nrepl/stop-server server)
   (log/info "nREPL server stopped"))
+
+
+(defn get-user [hmap-user]
+  (:user hmap-user))
+
+(comment
+  (get-user {:user "a"
+             :pass  "c"
+             "a" :a
+             [:a :b]  :c}))
