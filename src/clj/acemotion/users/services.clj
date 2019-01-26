@@ -13,4 +13,4 @@
 
 (defn login-get-token [email password]
   (if-let [user (login email password)]
-    (create-jwt-token user)))
+    (user-to-jwt user)))

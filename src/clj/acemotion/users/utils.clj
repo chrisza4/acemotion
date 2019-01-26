@@ -21,3 +21,7 @@
 
 (defn verify-jwt-token [token]
   (jwt/unsign token (:jwt-secret env)))
+
+(defn user-to-jwt [user]
+  (-> (select-keys user [:id :email])
+      (create-jwt-token)))

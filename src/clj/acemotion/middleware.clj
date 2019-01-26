@@ -4,6 +4,7 @@
             [cognitect.transit :as transit]
             [clojure.tools.logging :as log]
             [acemotion.layout :refer [error-page]]
+            [acemotion.users.utils :refer [verify-jwt-token]]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
             [ring.middleware.webjars :refer [wrap-webjars]]
             [acemotion.middleware.formats :as formats]
@@ -15,8 +16,8 @@
             [buddy.auth.accessrules :refer [restrict]]
             [buddy.auth :refer [authenticated?]]
             [buddy.auth.backends.session :refer [session-backend]])
-  (:import 
-           ))
+  (:import))
+
 
 (defn wrap-internal-error [handler]
   (fn [req]
@@ -52,6 +53,11 @@
 (defn wrap-restricted [handler]
   (restrict handler {:handler authenticated?
                      :on-error on-error}))
+
+(defn authfn
+  [request token]
+  (let [token (keyword token)]
+    (verify-jwt-token token)))
 
 (defn wrap-auth [handler]
   (let [backend (session-backend)]

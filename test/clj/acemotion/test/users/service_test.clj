@@ -34,3 +34,11 @@
   (testing "should not be able to login with incorrect username and incorrect password"
     (let [user (login "chakritx@gmail.com" "1234")]
       (is (= user nil)))))
+
+(deftest test-login-get-token
+  (testing "should return token that only contain email address and id"
+    (let [jwt-user (->  (login-get-token "chakrit@gmail.com" "1234")
+                        (user-utils/verify-jwt-token))]
+      (is (contains? jwt-user :id))
+      (is (contains? jwt-user :email))
+      (is (not (contains? jwt-user :pass))))))
