@@ -33,13 +33,6 @@
                :data {:info {:version "1.0.0"
                              :title "Sample API"
                              :description "Sample Services"}}}}
-
-    (GET "/whoami" []
-         :auth-rules authenticated?
-         :current-user user
-         :header-params [authorization :- s/Str]
-         (response/ok user))
-
     (POST "/login" []
       :return      api-response
       :body-params [username :- s/Str, password :- s/Str]
@@ -48,4 +41,16 @@
         {:body
          (if (= token nil)
            {:ok false :response "Error authentication"}
-           {:ok true  :response {:token token}})}))))
+           {:ok true  :response {:token token}})}))
+
+    (context "/api" []
+      :auth-rules authenticated?
+      :header-params [authorization :- s/Str]
+      :tags ["private"]
+
+      (GET "/sanity" []
+           (response/ok "I am sane"))
+
+      (GET "/whoami" []
+           :current-user user
+           (response/ok user)))))
