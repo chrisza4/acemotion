@@ -52,6 +52,8 @@
       (compojure-api/GET "/sanity" []
            (response/ok "I am sane"))
 
+      #'alerts-routes/routes
+
       (compojure-api/GET "/whoami" []
            :current-user user
            (response/ok user)))))
