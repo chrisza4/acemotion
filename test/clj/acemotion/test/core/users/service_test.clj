@@ -1,11 +1,11 @@
-(ns acemotion.test.users.service_test
-  (:require
-    [acemotion.core.users.services :refer :all]
-    [acemotion.db.core :refer [*db*] :as db]
-    [acemotion.core.utils.utils :as utils]
-    [acemotion.core.users.utils :as user-utils]
-    [acemotion.core.users.entity :as user-entity]
-    [clojure.test :refer :all]))
+(ns acemotion.test.core.users.service_test
+  (:require [acemotion.core.users.services :refer :all]
+            [acemotion.db.core :refer [*db*] :as db]
+            [acemotion.core.utils.utils :as utils]
+            [acemotion.core.users.utils :as user-utils]
+            [acemotion.core.users.entity :as user-entity]
+            [acemotion.test.helpers :as test-helpers]
+            [clojure.test :refer :all]))
 
 (def test-user {:id (utils/uuid)
                 :first_name "Chakrit"
@@ -16,6 +16,7 @@
                 :is_active true})
 
 (defn test-setup [f]
+  (test-helpers/setup-db!)
   (db/create-user! test-user)
   (f)
   (user-entity/test-delete-all-users!))

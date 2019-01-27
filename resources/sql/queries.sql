@@ -31,3 +31,7 @@ WHERE id = :id
 -- :name delete-all-users! :! :n
 -- :doc deletes all users, use for testing
 DELETE FROM users
+
+-- :name delete-user-by-firstname! :! :n
+-- :doc delete user by first_name
+DELETE FROM users WHERE first_name = :first_name

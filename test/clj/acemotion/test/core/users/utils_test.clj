@@ -1,4 +1,4 @@
-(ns acemotion.test.users.utils_test
+(ns acemotion.test.core.users.utils_test
   (:require
     [acemotion.core.users.utils :refer :all]
     [acemotion.core.utils.utils :as utils]

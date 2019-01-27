@@ -25,7 +25,7 @@
   (mount/stop #'acemotion.db.core/*db*)
   (mount/start #'acemotion.db.core/*db*)
   (binding [*ns* 'acemotion.db.core]
-    (conman/bind-connection acemotion.db.core/*db* "sql/queries.sql")))
+    (conman/bind-connection acemotion.db.core/*db* "sql/queries.sql" "sql/group-queries.sql")))
 
 (defn reset-db []
   (migrations/migrate ["reset"] (select-keys env [:database-url])))
@@ -40,5 +40,5 @@
   (migrations/create name (select-keys env [:database-url])))
 
 (comment
-  (restart) (migrate) (rollback)
+  (restart) (migrate) (rollback) (restart-db)
   (create-migration "owner-relationships"))
