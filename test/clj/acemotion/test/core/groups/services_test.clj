@@ -20,11 +20,11 @@
     (test-helpers/create-user! user))
   (f))
 
-(use-fixtures :once test-setup)
+(use-fixtures :each test-setup)
 
 (comment (test-setup))
 
-(deftest groups
+(deftest create-and-get-groups
   (testing "should be able to create group with chris and awa, and both chris and awa should see group"
     (groups-services/create-group! (:id chris) [(:id chris) (:id awa)])
     (let [groups (groups-services/get-related-groups (:id chris))
@@ -34,4 +34,24 @@
     (let [groups (groups-services/get-related-groups (:id awa))
           [group] groups]
       (is (= (count groups) 1))
+      (is (= (:id chris) (:owner_id group)))))
+
+  (testing "Given paul and luck create a group, chris should not see that group"
+    (groups-services/create-group! (:id paul) [(:id paul) (:id luck)])
+    (let [groups (groups-services/get-related-groups (:id chris))
+          [group] groups]
+      (is (= (count groups) 1))
       (is (= (:id chris) (:owner_id group))))))
+
+(deftest get-groups-members
+  (testing "Given group with chris as owner, Chris and Awa as members, both chris and awa should be members"
+    (let [group (groups-services/create-group! (:id chris) [(:id chris) (:id awa)])
+          members (groups-services/get-group-member-ids (:id chris) (:id group))]
+      (is (= 2 (count members)))
+      (is (some #(= % (:id chris)) members))))
+
+  (testing "Given group with chris as owner, only Awa as members, Chris should be automatically add as member"
+    (let [group (groups-services/create-group! (:id chris) [(:id awa)])
+          members (groups-services/get-group-member-ids (:id chris) (:id group))]
+      (is (= 2 (count members)))
+      (is (some #(= % (:id chris)) members)))))

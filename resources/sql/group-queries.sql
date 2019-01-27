@@ -20,6 +20,11 @@ SELECT groups.id, groups.owner_id, groups.created, groups.updated
   WHERE groups.owner_id = :user_id OR group_members.user_id = :user_id
   GROUP BY groups.id
 
+-- :name get-group-member-ids :? :*
+SELECT user_id
+  FROM group_members
+  WHERE group_id = :group_id
+
 -- :name test-delete-all-groups! :! :n
 -- :doc Delete all groups
 DELETE FROM group_members;
