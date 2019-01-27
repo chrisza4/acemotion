@@ -15,7 +15,7 @@
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
             [buddy.auth.accessrules :refer [restrict]]
             [buddy.auth :refer [authenticated?]]
-            [buddy.auth.backends.session :refer [session-backend]])
+            [buddy.auth.backends :as backends])
   (:import))
 
 
@@ -54,13 +54,11 @@
   (restrict handler {:handler authenticated?
                      :on-error on-error}))
 
-(defn authfn
-  [request token]
-  (let [token (keyword token)]
-    (verify-jwt-token token)))
+(defn authfn [request token]
+  (verify-jwt-token token))
 
 (defn wrap-auth [handler]
-  (let [backend (session-backend)]
+  (let [backend (backends/token {:authfn authfn})]
     (-> handler
         (wrap-authentication backend)
         (wrap-authorization backend))))

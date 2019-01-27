@@ -28,3 +28,5 @@
 
 (defn test-delete-all-users! []
   (delete-all-users!))
+
+(comment (create-seed-users!))

@@ -38,7 +38,7 @@
          :auth-rules authenticated?
          :current-user user
          :header-params [authorization :- s/Str]
-         (response/ok {:user user}))
+         (response/ok user))
 
     (POST "/login" []
       :return      api-response
@@ -47,5 +47,5 @@
       (let [token (user-service/login-get-token username password)]
         {:body
          (if (= token nil)
-           {:ok false :response "error authentication"}
+           {:ok false :response "Error authentication"}
            {:ok true  :response {:token token}})}))))
