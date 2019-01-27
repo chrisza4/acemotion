@@ -4,8 +4,8 @@
 
 (def my-routes
   (compojure-api/routes
-    (compojure-api/GET "/alert-sanity" [])
-    (response/ok "hi")
-
     (compojure-api/GET "/alerts" []
-     (response/ok "Not implemented yet"))))
+      "Not implemented yet")
+
+    (compojure-api/POST "/alerts" []
+      "Not implemented yet")))

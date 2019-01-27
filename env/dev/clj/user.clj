@@ -39,4 +39,6 @@
 (defn create-migration [name]
   (migrations/create name (select-keys env [:database-url])))
 
-(comment (restart))
+(comment
+  (restart) (migrate) (rollback)
+  (create-migration "owner-relationships"))
