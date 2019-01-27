@@ -3,7 +3,7 @@
             [compojure.api.sweet :refer :all]
             [schema.core :as s]
             [compojure.api.meta :refer [restructure-param]]
-            [acemotion.users.services :as user-service]
+            [acemotion.core.users.services :as user-service]
             [buddy.auth.accessrules :refer [restrict]]
             [buddy.auth :refer [authenticated?]]))
 

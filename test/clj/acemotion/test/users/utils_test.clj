@@ -1,7 +1,7 @@
 (ns acemotion.test.users.utils_test
   (:require
-    [acemotion.users.utils :refer :all]
-    [acemotion.utils.utils :as utils]
+    [acemotion.core.users.utils :refer :all]
+    [acemotion.core.utils.utils :as utils]
     [clojure.test :refer :all]))
 
 (deftest test-hash-password

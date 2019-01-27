@@ -1,8 +1,8 @@
-(ns acemotion.users.entity
+(ns acemotion.core.users.entity
   (:require
     [acemotion.db.core :refer :all]
-    [acemotion.utils.utils :as utils]
-    [acemotion.users.utils :as user-utils]))
+    [acemotion.core.utils.utils :as utils]
+    [acemotion.core.users.utils :as user-utils]))
 
 (defn create-seed-users! []
   (create-user! {:id (utils/uuid)

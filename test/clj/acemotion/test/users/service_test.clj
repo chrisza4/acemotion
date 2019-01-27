@@ -1,10 +1,10 @@
 (ns acemotion.test.users.service_test
   (:require
-    [acemotion.users.services :refer :all]
+    [acemotion.core.users.services :refer :all]
     [acemotion.db.core :refer [*db*] :as db]
-    [acemotion.utils.utils :as utils]
-    [acemotion.users.utils :as user-utils]
-    [acemotion.users.entity :as user-entity]
+    [acemotion.core.utils.utils :as utils]
+    [acemotion.core.users.utils :as user-utils]
+    [acemotion.core.users.entity :as user-entity]
     [clojure.test :refer :all]))
 
 (def test-user {:id (utils/uuid)

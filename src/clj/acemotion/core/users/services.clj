@@ -1,7 +1,7 @@
-(ns acemotion.users.services
+(ns acemotion.core.users.services
   (:require
-    [acemotion.users.entity :refer :all]
-    [acemotion.users.utils :refer :all]))
+    [acemotion.core.users.entity :refer :all]
+    [acemotion.core.users.utils :refer :all]))
 
 (defn- add-token [user-hash]
   (assoc user-hash :token (create-jwt-token user-hash)))

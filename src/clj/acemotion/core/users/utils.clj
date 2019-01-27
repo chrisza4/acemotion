@@ -1,4 +1,4 @@
-(ns acemotion.users.utils
+(ns acemotion.core.users.utils
   (:require
     [acemotion.config :refer [env]]
     [buddy.sign.jwt :as jwt]

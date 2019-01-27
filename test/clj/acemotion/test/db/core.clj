@@ -4,7 +4,7 @@
             [clojure.test :refer :all]
             [clojure.java.jdbc :as jdbc]
             [acemotion.config :refer [env]]
-            [acemotion.utils.utils :as utils]
+            [acemotion.core.utils.utils :as utils]
             [mount.core :as mount]))
 
 (use-fixtures

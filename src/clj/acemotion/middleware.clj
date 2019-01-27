@@ -4,7 +4,7 @@
             [cognitect.transit :as transit]
             [clojure.tools.logging :as log]
             [acemotion.layout :refer [error-page]]
-            [acemotion.users.utils :refer [verify-jwt-token]]
+            [acemotion.core.users.utils :refer [verify-jwt-token]]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
             [ring.middleware.webjars :refer [wrap-webjars]]
             [acemotion.middleware.formats :as formats]
