@@ -1,5 +1,5 @@
 (ns acemotion.test.db.core
-  (:require [acemotion.db.core :refer [*db*] :as db]
+  (:require [acemotion.db.core :as db]
             [luminus-migrations.core :as migrations]
             [clojure.test :refer :all]
             [clojure.java.jdbc :as jdbc]

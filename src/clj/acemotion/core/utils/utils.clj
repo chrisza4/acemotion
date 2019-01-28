@@ -5,7 +5,11 @@
       (.equals a b)
       (= a b)))
 
-(defn uuid [] (java.util.UUID/randomUUID))
+(defn uuid
+  ([] (java.util.UUID/randomUUID))
+  ([str] (try
+           (java.util.UUID/fromString str)
+           (catch Exception e nil))))
 
 (defn union-vector [vector member]
   (if (some #(compare-with-uuid % member) vector)

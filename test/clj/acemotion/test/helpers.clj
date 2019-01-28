@@ -1,5 +1,5 @@
 (ns acemotion.test.helpers
-  (:require [acemotion.db.core :refer [*db*] :as db]
+  (:require [acemotion.db.core :as db]
             [acemotion.config :refer [env]]
             [acemotion.core.utils.utils :as utils]
             [acemotion.core.users.utils :as user-utils]
@@ -18,7 +18,7 @@
    :first_name "Testing"
    :last_name "Testing Purpose"
    :email email
-   :pass (user-utils/hash-password (fixed-length-password))
+   :pass (user-utils/hash-password "1234")
    :salt ""
    :is_active true})
 
@@ -49,8 +49,8 @@
   true)
 
 (defn setup-db! []
-  (mount/start
-    #'acemotion.config/env
-    #'acemotion.db.core/*db*)
-  (migrations/migrate ["migrate"] (select-keys env [:database-url]))
+  ; (mount/start
+  ;   #'acemotion.config/env
+  ;   #'acemotion.db.core/*db*)
+  ; (migrations/migrate ["migrate"] (select-keys env [:database-url]))
   (clean-db!))

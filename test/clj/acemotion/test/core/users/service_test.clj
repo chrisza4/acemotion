@@ -1,6 +1,6 @@
 (ns acemotion.test.core.users.service_test
   (:require [acemotion.core.users.services :refer :all]
-            [acemotion.db.core :refer [*db*] :as db]
+            [acemotion.db.core :as db]
             [acemotion.core.utils.utils :as utils]
             [acemotion.core.users.utils :as user-utils]
             [acemotion.core.users.entity :as user-entity]

@@ -1,6 +1,6 @@
 (ns acemotion.test.core.groups.services_test
   (:require [acemotion.config :refer [env]]
-            [acemotion.db.core :refer [*db*] :as db]
+            [acemotion.db.core :as db]
             [acemotion.test.helpers :as test-helpers]
             [acemotion.core.groups.services :as groups-services]
             [clojure.test :refer :all]))
