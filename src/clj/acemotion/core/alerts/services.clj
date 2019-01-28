@@ -1,9 +1,9 @@
-(ns acemotion.core.alerts.services)
+(ns acemotion.core.alerts.services
+  (:require [schema.core :as s]
+            [acemotion.db.core :as db]))
 
-(def alert-type
-  {:warning 0
-   :danger 1})
+(defn get-alerts [user-id]
+  (db/get-related-alerts {:user-id user-id}))
 
-(defn get-alerts [user-id] nil)
-
-(defn create-alert [user-id alert] nil)
+(defn create-alert! [alert]
+  (db/create-alert! alert))

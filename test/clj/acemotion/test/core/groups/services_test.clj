@@ -3,9 +3,7 @@
             [acemotion.db.core :refer [*db*] :as db]
             [acemotion.test.helpers :as test-helpers]
             [acemotion.core.groups.services :as groups-services]
-            [clojure.test :refer :all]
-            [luminus-migrations.core :as migrations]
-            [mount.core :as mount]))
+            [clojure.test :refer :all]))
 
 (def chris (test-helpers/generate-test-user "chris@user.com"))
 (def awa (test-helpers/generate-test-user "awa@user.com"))

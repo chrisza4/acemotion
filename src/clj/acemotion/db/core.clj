@@ -22,7 +22,10 @@
              *db*))
   :stop (conman/disconnect! *db*))
 
-(conman/bind-connection *db* "sql/queries.sql" "sql/group-queries.sql")
+(conman/bind-connection acemotion.db.core/*db*
+  "sql/queries.sql"
+  "sql/group-queries.sql"
+  "sql/alert-queries.sql")
 
 (extend-protocol jdbc/IResultSetReadColumn
     java.sql.Timestamp

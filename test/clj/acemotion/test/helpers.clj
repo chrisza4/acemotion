@@ -26,15 +26,15 @@
   {:id (utils/uuid)
    :owner_id owner-id})
 
-(defn create-group! [owner-id & user-ids]
-  (let [group (generate-group owner-id)]
-    (do
-      (db/create-group! group)
-      (for [user-id user-ids]
-        (db/add-group-member! {:id (utils/uuid)
-                               :group_id (:id group)
-                               :user_id user-id})))))
+(defn create-group! [group]
+  (db/create-group! group)
+  group)
 
+(defn add-members-to-group! [group-id user-ids]
+  (doseq [user-id user-ids]
+    (db/add-group-member! {:id (utils/uuid)
+                           :group_id group-id
+                           :user_id user-id})))
 
 (defn create-user! [user]
   (db/create-user! user))
@@ -43,6 +43,7 @@
   (db/delete-user-by-firstname! {:first_name "Testing"}))
 
 (defn clean-db! []
+  (db/test-delete-all-alerts)
   (db/test-delete-all-groups!)
   (db/delete-all-users!)
   true)

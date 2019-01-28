@@ -25,7 +25,10 @@
   (mount/stop #'acemotion.db.core/*db*)
   (mount/start #'acemotion.db.core/*db*)
   (binding [*ns* 'acemotion.db.core]
-    (conman/bind-connection acemotion.db.core/*db* "sql/queries.sql" "sql/group-queries.sql")))
+    (conman/bind-connection acemotion.db.core/*db*
+      "sql/queries.sql"
+      "sql/group-queries.sql"
+      "sql/alert-queries.sql")))
 
 (defn reset-db []
   (migrations/migrate ["reset"] (select-keys env [:database-url])))
