@@ -23,9 +23,10 @@
   [_ binding acc]
   (update-in acc [:letks] into [binding `(:identity ~'+compojure-api-request+)]))
 
-(s/defschema api-response
+(defn api-response [data-schemas]
   {:ok Boolean
-   :response s/Any})
+   :data data-schemas
+   (s/optional-key :error) s/Str})
 
 (def service-routes
   (compojure-api/api
@@ -35,14 +36,14 @@
                              :title "Sample API"
                              :description "Sample Services"}}}}
     (compojure-api/POST "/login" []
-      :return      api-response
+      :return      (api-response s/Any)
       :body-params [username :- s/Str, password :- s/Str]
       :summary "Login and get authentication token"
       (let [token (user-service/login-get-token username password)]
         {:body
          (if (= token nil)
-           {:ok false :response "Error authentication"}
-           {:ok true  :response {:token token}})}))
+           {:ok false :error "Error authentication"}
+           {:ok true  :data {:token token}})}))
 
     (compojure-api/context "/api" []
       :auth-rules authenticated?

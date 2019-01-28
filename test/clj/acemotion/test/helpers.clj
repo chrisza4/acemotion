@@ -49,8 +49,8 @@
   true)
 
 (defn setup-db! []
-  ; (mount/start
-  ;   #'acemotion.config/env
-  ;   #'acemotion.db.core/*db*)
-  ; (migrations/migrate ["migrate"] (select-keys env [:database-url]))
+  (mount/start
+    #'acemotion.config/env
+    #'acemotion.db.core/*db*)
+  (migrations/migrate ["migrate"] (select-keys env [:database-url]))
   (clean-db!))
