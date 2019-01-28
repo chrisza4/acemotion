@@ -2,31 +2,12 @@
   (:require [ring.util.http-response :as response]
             [compojure.api.sweet :as compojure-api]
             [schema.core :as s]
-            [compojure.api.meta :refer [restructure-param]]
             [acemotion.core.users.services :as user-service]
             [acemotion.core.alerts.routes :as alerts-routes]
-            [buddy.auth.accessrules :refer [restrict]]
+            [acemotion.routes.utils :as routes-utils]
             [buddy.auth :refer [authenticated?]]))
 
-(defn access-error [_ _]
-  (response/unauthorized {:error "unauthorized"}))
-
-(defn wrap-restricted [handler rule]
-  (restrict handler {:handler  rule
-                     :on-error access-error}))
-
-(defmethod restructure-param :auth-rules
-  [_ rule acc]
-  (update-in acc [:middleware] conj [wrap-restricted rule]))
-
-(defmethod restructure-param :current-user
-  [_ binding acc]
-  (update-in acc [:letks] into [binding `(:identity ~'+compojure-api-request+)]))
-
-(defn api-response [data-schemas]
-  {:ok Boolean
-   :data data-schemas
-   (s/optional-key :error) s/Str})
+(routes-utils/ProvideAuth)
 
 (def service-routes
   (compojure-api/api
@@ -36,7 +17,7 @@
                              :title "Sample API"
                              :description "Sample Services"}}}}
     (compojure-api/POST "/login" []
-      :return      (api-response s/Any)
+      :return      (routes-utils/api-response s/Any)
       :body-params [username :- s/Str, password :- s/Str]
       :summary "Login and get authentication token"
       (let [token (user-service/login-get-token username password)]
