@@ -4,6 +4,7 @@
             [schema.core :as s]
             [acemotion.core.users.services :as user-service]
             [acemotion.core.alerts.routes :as alerts-routes]
+            [acemotion.core.groups.routes :as groups-routes]
             [acemotion.routes.utils :as routes-utils]
             [buddy.auth :refer [authenticated?]]))
 
@@ -50,6 +51,7 @@
            (response/ok "I am sane"))
 
       #'alerts-routes/my-routes
+      #'groups-routes/my-routes
 
       (compojure-api/GET "/whoami" []
            :current-user user
