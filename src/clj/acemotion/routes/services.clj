@@ -13,6 +13,12 @@
   (fn [^Exception e data request]
     (f {:message (.getMessage e), :type (name type)})))
 
+(def error-handlers
+  (let [create-handler
+        (fn [type response-fn] {type (custom-error-handler response-fn type)})]
+    (conj
+      (create-handler :client-error response/bad-request))))
+
 (def service-routes
   (compojure-api/api
     {:swagger {:ui "/swagger-ui"
@@ -21,9 +27,8 @@
                              :title "Sample API"
                              :description "Sample Services"}}}
      :exceptions
-     {:handlers
-      {:client-error (custom-error-handler response/bad-request :client-error)}}}
-    (compojure-api/GET "/err" []
+     {:handlers error-handlers}}
+    (compojure-api/GET "/err-test" []
       (throw (ex-info "Fuck you that's why" {:type :client-error})))
 
     (compojure-api/POST "/login" []
