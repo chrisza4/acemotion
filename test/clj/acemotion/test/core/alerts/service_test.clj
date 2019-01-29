@@ -39,3 +39,17 @@
     (testing "Other people should not be able to see it"
       (let [alerts (alerts-services/get-alerts (:id paul))]
         (is (= 0 (count alerts)))))))
+
+(deftest create-alert!
+  (testing "Given duplicate alert, should throw duplicate exception"
+    (let [alert {:id (utils/uuid)
+                 :created ""
+                 :updated ""
+                 :owner_id (:id awa)
+                 :group_id (:id group-chris-awa)
+                 :status 1}]
+      (alerts-services/create-alert! alert)
+      (try
+        (alerts-services/create-alert! alert)
+        (catch Exception e
+          (is (= (:cause (ex-data e)) :duplicate-id)))))))
