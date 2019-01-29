@@ -2,6 +2,7 @@
   (:require [compojure.api.sweet :as compojure-api]
             [compojure.api.meta :refer [restructure-param]]
             [acemotion.core.alerts.services :as alerts-services]
+            [acemotion.core.alerts.schemas :as alerts-schemas]
             [acemotion.routes.utils :as routes-utils]
             [acemotion.core.utils.utils :as utils]
             [ring.util.http-response :as response]))
@@ -11,8 +12,20 @@
 (def my-routes
   (compojure-api/routes
     (compojure-api/GET "/alerts" []
+      :return (routes-utils/api-response [alerts-schemas/alert])
       :current-user user
-      (response/ok (alerts-services/get-alerts (utils/uuid (:id user)))))
+      (->> (:id user)
+           (utils/uuid)
+           (alerts-services/get-alerts)
+           (routes-utils/json-ok)))
 
     (compojure-api/POST "/alerts" []
-      "Not implemented yet")))
+      :body [data alerts-schemas/alert-post]
+      :current-user user
+      :return (routes-utils/api-response alerts-schemas/alert)
+      (->> (:id user)
+           (utils/uuid)
+           (assoc data :owner_id)
+           (utils/fill-id)
+           (alerts-services/create-alert!)
+           (routes-utils/json-ok)))))

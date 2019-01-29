@@ -16,3 +16,12 @@
     (let [[uuid1 uuid2 uuid3] [(utils/uuid) (utils/uuid) (utils/uuid)]
           actual (utils/union-vector [uuid1] uuid1)]
       (is (= [uuid1] actual)))))
+
+(deftest fill-id
+  (testing "if input map do not have id field, provide new id as uuid"
+    (let [actual (utils/fill-id {:a 1})]
+      (is (uuid? (:id actual)))))
+
+  (testing "if input map already have id field, use old id"
+    (let [actual (utils/fill-id {:id 1})]
+      (is (= 1 (:id actual))))))

@@ -1,6 +1,7 @@
 (ns acemotion.routes.utils
   (:require [compojure.api.sweet :as compojure-api]
             [schema.core :as s]
+            [clojure.tools.logging :as log]
             [buddy.auth.accessrules :refer [restrict]]
             [ring.util.http-response :as response]
             [compojure.api.meta :refer [restructure-param]]))
@@ -19,6 +20,14 @@
 (defmethod restructure-param :current-user
   [_ binding acc]
   (update-in acc [:letks] into [binding `(:identity ~'+compojure-api-request+)]))
+
+(defn json-ok [data]
+  (response/ok {:ok true
+                :data data}))
+
+(defn console-log [a]
+  (log/info a)
+  a)
 
 (defn api-response [data-schemas]
   {:ok Boolean

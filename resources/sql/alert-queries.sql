@@ -1,9 +1,10 @@
--- :name create-alert! :! :n
+-- :name create-alert! :<! :1
 -- :doc creates a new alert
 INSERT INTO alerts
   (id, created, updated, owner_id, group_id, status)
 VALUES
   (:id, current_timestamp, current_timestamp, :owner_id, :group_id, :status)
+RETURNING *
 
 -- :name get-related-alerts :? :*
 -- :doc get related group by user id

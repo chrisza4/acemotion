@@ -13,3 +13,8 @@
    :owner_id s/Uuid
    :group_id s/Uuid
    :status (apply s/enum (vals alert-type))})
+
+(def alert-post
+  {(s/optional-key :id) s/Uuid
+   :group_id s/Uuid
+   :status (apply s/enum (vals alert-type))})

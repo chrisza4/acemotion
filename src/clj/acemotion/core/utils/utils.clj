@@ -15,3 +15,11 @@
   (if (some #(compare-with-uuid % member) vector)
       vector
       (conj vector member)))
+
+(defn fill-id [data]
+  (assoc data :id (or (:id data) (uuid))))
+
+(defn format-created-updated [data]
+  (assoc data
+    :created (.format java.time.format.DateTimeFormatter/ISO_LOCAL_DATE_TIME (:created data))
+    :updated (.format java.time.format.DateTimeFormatter/ISO_LOCAL_DATE_TIME (:updated data))))
