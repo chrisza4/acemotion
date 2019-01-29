@@ -55,7 +55,10 @@
                      :on-error on-error}))
 
 (defn authfn [request token]
-  (verify-jwt-token token))
+  (let [user (verify-jwt-token token)]
+    (if (and token (not user))
+      (log/warn (str "Invalid user jwt token:" token)))
+    user))
 
 (defn wrap-auth [handler]
   (let [backend (backends/token {:authfn authfn})]

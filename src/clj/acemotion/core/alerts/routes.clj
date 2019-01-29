@@ -4,8 +4,7 @@
             [acemotion.core.alerts.services :as alerts-services]
             [acemotion.core.alerts.schemas :as alerts-schemas]
             [acemotion.routes.utils :as routes-utils]
-            [acemotion.core.utils.utils :as utils]
-            [ring.util.http-response :as response]))
+            [acemotion.core.utils.utils :as utils]))
 
 (routes-utils/ProvideAuth)
 

@@ -20,8 +20,13 @@
   (jwt/sign user (:jwt-secret env)))
 
 (defn verify-jwt-token [token]
-  (jwt/unsign token (:jwt-secret env)))
+  (try
+    (jwt/unsign token (:jwt-secret env))
+    (catch Exception e nil)))
 
 (defn user-to-jwt [user]
   (-> (select-keys user [:id :email])
       (create-jwt-token)))
+
+(comment
+    (verify-jwt-token "x"))
