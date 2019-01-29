@@ -8,21 +8,28 @@
 
 (routes-utils/ProvideAuth)
 
+(defn- get-alert-handler [user]
+  (->> (routes-utils/user-id user)
+       (alerts-services/get-alerts)
+       (routes-utils/json-ok)))
+
+(defn- post-alert-handler [user data]
+  (->> (routes-utils/user-id user)
+       (assoc data :owner_id)
+       (utils/fill-id)
+       (alerts-services/create-alert!)
+       (routes-utils/json-ok)))
+
 (def my-routes
   (compojure-api/routes
     (compojure-api/GET "/alerts" []
       :return (routes-utils/api-response [alerts-schemas/alert])
       :current-user user
-      (->> (routes-utils/user-id user)
-           (alerts-services/get-alerts)
-           (routes-utils/json-ok)))
+      (get-alert-handler user))
 
     (compojure-api/POST "/alerts" []
       :body [data alerts-schemas/alert-post]
       :current-user user
       :return (routes-utils/api-response alerts-schemas/alert)
-      (->> (routes-utils/user-id user)
-           (assoc data :owner_id)
-           (utils/fill-id)
-           (alerts-services/create-alert!)
-           (routes-utils/json-ok)))))
+      (routes-utils/console-log data)
+      (post-alert-handler user data))))

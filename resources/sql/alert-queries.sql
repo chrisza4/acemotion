@@ -15,5 +15,10 @@ SELECT alerts.*
   WHERE group_members.user_id = :user-id OR alerts.owner_id = :user-id
   GROUP BY alerts.id
 
+-- :name alert-exists :? :n
+SELECT count(0)
+  FROM alerts
+  WHERE id = :id
+
 -- :name test-delete-all-alerts :! :n
 DELETE FROM alerts
