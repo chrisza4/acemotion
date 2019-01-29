@@ -13,4 +13,5 @@
 (defn create-alert! [alert]
   (if-not (alert-id-exists (:id alert))
     (db/create-alert! alert)
-    (throw (ex-info "Duplicate id" {:cause :duplicate-id}))))
+    (throw (ex-info "Duplicate id" {:type  :client-error
+                                    :cause :duplicate-id}))))

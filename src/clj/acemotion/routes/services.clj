@@ -9,13 +9,23 @@
 
 (routes-utils/ProvideAuth)
 
+(defn custom-error-handler [f type]
+  (fn [^Exception e data request]
+    (f {:message (.getMessage e), :type (name type)})))
+
 (def service-routes
   (compojure-api/api
     {:swagger {:ui "/swagger-ui"
                :spec "/swagger.json"
                :data {:info {:version "1.0.0"
                              :title "Sample API"
-                             :description "Sample Services"}}}}
+                             :description "Sample Services"}}}
+     :exceptions
+     {:handlers
+      {:client-error (custom-error-handler response/bad-request :client-error)}}}
+    (compojure-api/GET "/err" []
+      (throw (ex-info "Fuck you that's why" {:type :client-error})))
+
     (compojure-api/POST "/login" []
       :return      (routes-utils/api-response s/Any)
       :body-params [username :- s/Str, password :- s/Str]
