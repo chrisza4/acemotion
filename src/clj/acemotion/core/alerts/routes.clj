@@ -14,8 +14,7 @@
     (compojure-api/GET "/alerts" []
       :return (routes-utils/api-response [alerts-schemas/alert])
       :current-user user
-      (->> (:id user)
-           (utils/uuid)
+      (->> (routes-utils/user-id user)
            (alerts-services/get-alerts)
            (routes-utils/json-ok)))
 
@@ -23,8 +22,7 @@
       :body [data alerts-schemas/alert-post]
       :current-user user
       :return (routes-utils/api-response alerts-schemas/alert)
-      (->> (:id user)
-           (utils/uuid)
+      (->> (routes-utils/user-id user)
            (assoc data :owner_id)
            (utils/fill-id)
            (alerts-services/create-alert!)

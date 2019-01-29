@@ -1,6 +1,7 @@
 (ns acemotion.routes.utils
   (:require [compojure.api.sweet :as compojure-api]
             [schema.core :as s]
+            [acemotion.core.utils.utils :as utils]
             [clojure.tools.logging :as log]
             [buddy.auth.accessrules :refer [restrict]]
             [ring.util.http-response :as response]
@@ -28,6 +29,11 @@
 (defn console-log [a]
   (log/info a)
   a)
+
+(defn user-id [{user-id :id}]
+  (if (uuid? user-id)
+      user-id
+      (utils/uuid user-id)))
 
 (defn api-response [data-schemas]
   {:ok Boolean
