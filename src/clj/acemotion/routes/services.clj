@@ -8,7 +8,7 @@
             [acemotion.routes.utils :as routes-utils]
             [buddy.auth :refer [authenticated?]]))
 
-(routes-utils/ProvideAuth)
+; (routes-utils/ProvideAuth)
 
 (defn custom-error-handler [f type]
   (fn [^Exception e data request]

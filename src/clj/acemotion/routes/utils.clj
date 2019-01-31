@@ -41,9 +41,9 @@
    (s/optional-key :error) s/Str})
 
 (defmacro ProvideAuth []
-  '(defmethod restructure-param :current-user
-    [_ binding acc]
-    (update-in acc [:letks] into [binding `(:identity ~'+compojure-api-request+)]))
-   (defmethod restructure-param :auth-rules
-     [_ rule acc]
-     (update-in acc [:middleware] conj [wrap-restricted rule])))
+  '(do (defmethod compojure.api.meta/restructure-param :current-user
+         [_ binding acc]
+         (update-in acc [:letks] into [binding `(:identity ~'+compojure-api-request+)]))
+       (defmethod compojure.api.meta/restructure-param :auth-rules
+         [_# rule acc]
+         (update-in acc [:middleware] conj [wrap-restricted rule]))))

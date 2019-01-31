@@ -6,7 +6,7 @@
             [acemotion.routes.utils :as routes-utils]
             [acemotion.core.utils.utils :as utils]))
 
-(routes-utils/ProvideAuth)
+; (routes-utils/ProvideAuth)
 
 (defn- get-groups-handler [user]
   (->> (routes-utils/user-id user)

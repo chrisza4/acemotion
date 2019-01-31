@@ -1,12 +1,27 @@
 (ns acemotion.core.alerts.routes
   (:require [compojure.api.sweet :as compojure-api]
             [compojure.api.meta :refer [restructure-param]]
+            [ring.util.http-response :as response]
+            [buddy.auth.accessrules :refer [restrict]]
             [acemotion.core.alerts.services :as alerts-services]
             [acemotion.core.alerts.schemas :as alerts-schemas]
             [acemotion.routes.utils :as routes-utils]
             [acemotion.core.utils.utils :as utils]))
 
-(routes-utils/ProvideAuth)
+(defn access-error [_ _]
+  (response/unauthorized {:error "unauthorized"}))
+
+(defn wrap-restricted [handler rule]
+  (restrict handler {:handler  rule
+                     :on-error access-error}))
+
+(defmethod restructure-param :auth-rules
+  [_ rule acc]
+  (update-in acc [:middleware] conj [wrap-restricted rule]))
+
+(defmethod restructure-param :current-user
+  [_ binding acc]
+  (update-in acc [:letks] into [binding `(:identity ~'+compojure-api-request+)]))
 
 (defn- get-alert-handler [user]
   (->> (routes-utils/user-id user)
